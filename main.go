@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -61,8 +62,14 @@ func WriteNewContent(content string) {
 
 // 获得需要修改的域名
 func GetDomains() string {
-	file, _ := os.Open("./domains")
+	file, _ := os.Open(GetRootPath() + "/domains")
 	defer file.Close()
 	content, _ := ioutil.ReadAll(file)
 	return string(content)
+}
+
+// 获得执行程序的目录路径
+func GetRootPath() string {
+	ex, _ := os.Executable()
+	return filepath.Dir(ex)
 }
